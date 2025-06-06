@@ -119,8 +119,11 @@
         $enc_pass = sha1($passw);
         
         $sql = "
-        select 
+        SELECT 
             id,
+            firstname,
+            lastname,
+            photo,
             COUNT(id) as total
         from
             users
@@ -129,7 +132,7 @@
             password = '$enc_pass' and 
             status = true
         GROUP BY 
-            id
+            id, firstname, lastname, photo
         ";
 
         $res = pg_query($conn, $sql);
@@ -138,6 +141,14 @@
             $row = pg_fetch_assoc($res);
             if($row && $row['total'] > 0){  //para evitar errores cuando la consulta no devuelve resultados
                 $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_name'] = $row['firstname'] . ' ' . $row['lastname'];
+                //$_SESSION['user_image'] = $row['photo'];
+                if (!empty($row['photo'])) {
+                    $_SESSION['user_image'] = $row['photo']; // base64
+                } else {
+                    $_SESSION['user_image'] = null; // dejar nulo
+                }
+
                 header('Refresh: 0; URL=http://localhost/schoolar2/src/index.php');
             }else{
                 echo "Login failed";

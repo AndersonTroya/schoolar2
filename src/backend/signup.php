@@ -6,11 +6,17 @@
     $lname  = $_POST['l_name'];
     $email  = $_POST['e_mail'];
     $passwd = $_POST['passw'];
+    $photoBase64 = null;
     
     // Obtener el contenido del archivo y convertirlo
-    $fileTmpPath = $_FILES['u_photo']['tmp_name'];
+    /*$fileTmpPath = $_FILES['u_photo']['tmp_name'];
     $fileData = file_get_contents($fileTmpPath);
-    $photoBase64 = base64_encode($fileData);
+    $photoBase64 = base64_encode($fileData);*/
+    if (isset($_FILES['u_photo']) && is_uploaded_file($_FILES['u_photo']['tmp_name'])) {
+        $fileTmpPath = $_FILES['u_photo']['tmp_name'];
+        $fileData = file_get_contents($fileTmpPath);
+        $photoBase64 = base64_encode($fileData);
+    }
 
     //encriptado
     $enc_pass = sha1($passwd);
@@ -31,8 +37,10 @@
         if($row['total'] > 0){
             echo "Email already exists";
         }else{
+            $photoValue = $photoBase64 !== null ? "'$photoBase64'" : "NULL";
+            
             $sql = "INSERT INTO users (firstname, lastname, email, password, photo)
-            VALUES('$fname','$lname','$email','$enc_pass','$photoBase64')
+            VALUES('$fname','$lname','$email','$enc_pass','$photoValue')
             ";
 
             $res = pg_query($conn, $sql);
