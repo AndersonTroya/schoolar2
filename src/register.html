@@ -36,7 +36,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form name = "register-form" class="user" action="backend/signup.php" method="post">
+                            <form name = "register-form" class="user" action="backend/signup.php" method="post" enctype="multipart/form-data">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
@@ -61,15 +61,24 @@
                                             id="exampleRepeatPassword" placeholder="Repeat Password">
                                     </div>
                                 </div>
+                                <!-- <div class="form-group">
+                                    <input type="file" class="form-control form-control-user" id="examplePhoto"
+                                        name="u_photo">
+                                </div>-->
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Sube tu foto</label>
+                                    <input class="form-control" type="file" id="formFile" name="u_photo">
+                                </div>
+
                                 <button class="btn btn-primary btn-user btn-block">Register account</button>
                                 <!-- <a href="login.html" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </a>-->
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <a href="index.php" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Register with Google
                                 </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <a href="index.php" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                 </a>
                             </form>
@@ -78,7 +87,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="login.php">Already have an account? Login!</a> <!-- login.php-->
                             </div>
                         </div>
                     </div>

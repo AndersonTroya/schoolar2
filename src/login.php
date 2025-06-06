@@ -1,3 +1,14 @@
+<?php
+
+    include('../config/database.php');
+
+    session_start();
+
+    if(isset($_SESSION['user_id'])){
+        header('Refresh: 0; URL=http://localhost/schoolar2/src/index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,15 +52,15 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form  name="login-form" class="user" action="login.php" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                                name="e_mail" placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="exampleInputPassword" name="p_sswd" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,14 +69,12 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                        <a href="index.php" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                        <a href="index.php" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
                                     </form>
@@ -101,3 +110,38 @@
 </body>
 
 </html>
+
+<?php
+    if(!empty($_POST['e_mail']) && !empty($_POST['p_sswd'])){   //valida que se halla enviado form
+        $email = $_POST['e_mail'];
+        $passw = $_POST['p_sswd'];
+
+        $enc_pass = sha1($passw);
+        
+        $sql = "
+        select 
+            id,
+            COUNT(id) as total
+        from
+            users
+        where
+            email = '$email' and 
+            password = '$enc_pass' and 
+            status = true
+        GROUP BY 
+            id
+        ";
+
+        $res = pg_query($conn, $sql);
+
+        if($res){
+            $row = pg_fetch_assoc($res);
+            if($row && $row['total'] > 0){  //para evitar errores cuando la consulta no devuelve resultados
+                $_SESSION['user_id'] = $row['id'];
+                header('Refresh: 0; URL=http://localhost/schoolar2/src/index.php');
+            }else{
+                echo "Login failed";
+            }
+        }
+    }
+?>

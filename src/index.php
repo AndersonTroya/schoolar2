@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['user_id'])){
+        header('Refresh: 0; URL=http://localhost/schoolar2/src/login.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,7 +99,7 @@
                 </div>
             </li>
 
-            <!-- Divider -->
+            <!-- Divider logout -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -109,7 +117,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="login.php">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
@@ -228,7 +236,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <div class="small text-gray-500">June 05, 2025</div>
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                     </div>
                                 </a>
@@ -239,7 +247,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        <div class="small text-gray-500">May 7, 2025</div>
                                         $290.29 has been deposited into your account!
                                     </div>
                                 </a>
@@ -250,7 +258,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        <div class="small text-gray-500">May 2, 2025</div>
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
                                 </a>
@@ -731,7 +739,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
