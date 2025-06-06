@@ -8,7 +8,6 @@
         header('Refresh: 0; URL=http://localhost/schoolar2/src/index.php');
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,9 +107,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
-
 </html>
-
 <?php
     if(!empty($_POST['e_mail']) && !empty($_POST['p_sswd'])){   //valida que se halla enviado form
         $email = $_POST['e_mail'];
@@ -150,6 +147,7 @@
                 }
 
                 header('Refresh: 0; URL=http://localhost/schoolar2/src/index.php');
+
             }else{
                 echo "Login failed";
             }

@@ -439,7 +439,14 @@
                                                 echo "<td>". $row['lastname'] ."</td>";
                                                 echo "<td>". $row['email'] ."</td>";
                                                 echo "<td>". $row['status'] ."</td>";
-                                                echo "<td alling='center'><img src='photo_users/photo_default.png' width='40'></td>";
+                                                // Si el usuario tiene una imagen en la BD, la mostramos en base64, sino usamos la imagen por defecto
+                                                if (!empty($row['photo'])) {
+                                                    $imagen = 'data:image/png;base64,' . $row['photo'];
+                                                } else {
+                                                    $imagen = 'photo_users/photo_default.png';
+                                                }
+
+                                                echo "<td align='center'><img src='". htmlspecialchars($imagen) ."' width='40'></td>";
                                                 echo "<td>";
                                                 echo "<a href=''><img src = 'img/editar.png' width='20'></a>";
                                                 echo "<a href=''><img src = 'img/simbolo-de-bote-de-basura-negro.png' width='20'></a>";

@@ -9,9 +9,6 @@
     $photoBase64 = null;
     
     // Obtener el contenido del archivo y convertirlo
-    /*$fileTmpPath = $_FILES['u_photo']['tmp_name'];
-    $fileData = file_get_contents($fileTmpPath);
-    $photoBase64 = base64_encode($fileData);*/
     if (isset($_FILES['u_photo']) && is_uploaded_file($_FILES['u_photo']['tmp_name'])) {
         $fileTmpPath = $_FILES['u_photo']['tmp_name'];
         $fileData = file_get_contents($fileTmpPath);
@@ -37,7 +34,7 @@
         if($row['total'] > 0){
             echo "Email already exists";
         }else{
-            $photoValue = $photoBase64 !== null ? "'$photoBase64'" : "NULL";
+            $photoValue = $photoBase64 !== null ? "'$photoBase64'" : null;
             
             $sql = "INSERT INTO users (firstname, lastname, email, password, photo)
             VALUES('$fname','$lname','$email','$enc_pass','$photoValue')
@@ -48,7 +45,7 @@
             if($res){
 
                 echo "<script>alert('Users has been created succesfully. Go to login!')</script>";
-                header('Refresh: 0; URL=http://localhost/schoolar2/src/login.php');//login.php
+                header('Refresh: 0; URL=http://localhost/schoolar2/src/login.php');
             }else{
                 echo "Error";
             }
